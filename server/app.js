@@ -67,11 +67,13 @@ app.post("/evenorodd",(req,res)=>{
 })
 app.post("/reverse",(req,res)=>{
     try {
-        let a = req.body.a;
-
-        let splitString = a.split("");
-        let reverse = splitString.reverse();
-        res.status(200).json({msg : reverse})
+       let a = req.body.a;
+       let b = a.split("")
+       console.log(b);
+       let c = b.reverse();
+       console.log(c);
+       let d = c.join("");
+       console.log(d);
     } catch (error) {
         console.log(error);
         res.status(500).json({msg : error})
@@ -80,12 +82,10 @@ app.post("/reverse",(req,res)=>{
 app.post("/palindrome",(req,res)=>{
     try {
         let a = req.body.a;
-        let splitString = a.split("");
-        let reverse = splitString.reverse();
-        let arra = Array.of(reverse)
-        if(reverse == arra){
+        let output = a.split('').reverse().join('')
+        if(a === output){
             return res.status(200).json({msg : "it is palindrome"})
-        }else{
+        }else if(a !== output){
             return res.status(200).json({msg : "it is not a palindrome"})
         }
     } catch (error) {
@@ -95,12 +95,28 @@ app.post("/palindrome",(req,res)=>{
 })
 app.post("/vowels",(req,res)=>{
     try {
-        let a = req.body.a;
-        let splitString = a.split("");
-        console.log(splitString);
-        let arr = ["a","e","i","o","u"]
-        let vowel = splitString.every(arr);
-        console.log(vowel);
+        let a = req.body.a.toLowerCase();
+        let count = 0;
+        let vowels= ["a","e","i","o","u"];
+        for(let x of a ){
+            if(vowels.includes(x))
+                count ++
+        }
+        res.status(200).json({ msg : `total number of vowels = ${count} `})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg : error})
+    }
+})
+app.post("/volwel",(req,res)=>{
+    try {
+        let  a = req.body.a.toLowerCase()
+        // let count = 0
+        let vowels = "aeiou"
+        let countVowels = a.split("")
+        let c = countVowels.filter(x=> vowels.indexOf(x)!=-1)
+        let output = c.length
+        console.log(output);
     } catch (error) {
         console.log(error);
         res.status(500).json({msg : error})
@@ -120,6 +136,30 @@ app.post("/age",(req,res)=>{
     }
 })
 
+app.post("/maximum",(req,res)=>{
+    try {
+        // let a = req.body.a;
+        // let output= a.sort((x,y)=> y-x);
+        // let result = output[0]
+        // console.log(result);
+        let a = req.body.a;
+        let max = -Infinity;
+        for(let x of a){
+            if ( x > max){
+                max = x
+            }
+        }
+        res.status(200).json({ msg : max})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg : error})
+    }
+})
+
+
+
+
 app.listen(port,()=>{
     console.log(`server id running at http://localhost:${port}`);
 })
+
